@@ -1,0 +1,44 @@
+POST http://localhost:8080/beer
+Content-Type: application/json
+
+{
+  "name": "Little Billy",
+  "age": 16
+}
+
+> {%
+
+client.test("should accept beer", function() {
+  client.assert(!!response.body["REJECTED"], 'Expected result is: REJECTED');
+  client.assert(response.status === 400, 'Expected status is: 400');
+});
+
+%}
+
+###
+POST http://localhost:8080/beer
+Content-Type: application/json
+
+{
+  "name": "Maksimko",
+  "age": 36
+}
+
+> {%
+
+client.test("should accept beer", function() {
+  client.assert(!!response.body["ACCEPTED"], 'Expected result is: ACCEPTED');
+  client.assert(response.status === 202, 'Expected status is: 202');
+});
+
+%}
+
+###
+GET http://localhost:8080/statistics
+Accept: application/json
+
+###
+GET http://localhost:8080/404
+Accept: application/json
+
+###
