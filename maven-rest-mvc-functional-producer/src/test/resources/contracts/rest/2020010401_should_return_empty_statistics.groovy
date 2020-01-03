@@ -1,4 +1,5 @@
-package contracts.rest
+package contracts.rest // will point to com.github...RestBase.class, but
+// package contracts.messaging will point to com.github...MessagingBase.class
 
 import org.springframework.cloud.contract.spec.Contract
 

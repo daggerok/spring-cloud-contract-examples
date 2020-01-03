@@ -6,6 +6,7 @@
 target/
 build/
 out/
+.m2/
 ### STS ###
 .apt_generated
 .classpath

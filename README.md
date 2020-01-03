@@ -16,6 +16,8 @@ jdk11 # point JAVA_HOME to JDK 11
 
 ## resources
 
+* https://support.smartbear.com/alertsite/docs/monitors/api/endpoint/jsonpath.html
+* https://cloud.spring.io/spring-cloud-contract/2.0.x/multi/multi__contract_dsl.html#contract-dsl-http-top-level-elements
 * [GitHub: Spring Cloud Contract Samples](https://github.com/spring-cloud-samples/spring-cloud-contract-samples)
 * https://www.youtube.com/watch?v=MDydAqL4mYE
 * https://www.youtube.com/watch?v=sAAklvxmPmk

@@ -18,8 +18,12 @@
     <description>Producer app</description>
 
     <properties>
+        <encoding>UTF-8</encoding>
         <java.version>11</java.version>
         <spring-cloud.version>Hoxton.SR1</spring-cloud.version>
+        <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
+        <spring-cloud-contract-maven-plugin.version>2.2.1.RELEASE</spring-cloud-contract-maven-plugin.version>
     </properties>
 
     <dependencies>
@@ -65,6 +69,11 @@
             <artifactId>spring-cloud-starter-contract-verifier</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--<dependency>
+            <groupId>org.springframework.restdocs</groupId>
+            <artifactId>spring-restdocs-mockmvc</artifactId>
+            <optional>true</optional>
+        </dependency>-->
     </dependencies>
 
     <dependencyManagement>
@@ -92,11 +101,12 @@
             <plugin>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-contract-maven-plugin</artifactId>
-                <version>2.2.1.RELEASE</version>
+                <version>${spring-cloud-contract-maven-plugin.version}</version>
                 <extensions>true</extensions>
                 <configuration>
                     <testFramework>JUNIT5</testFramework>
-                    <baseClassForTests>com.github.daggerok.mavenrestmvcproducer.BaseRestMvcProducerApplicationTests</baseClassForTests>
+                    <!--<baseClassForTests>com.github.daggerok.mavenrestmvcproducer.RestBase</baseClassForTests>-->
+                    <packageWithBaseClasses>com.github.daggerok.mavenrestmvcproducer</packageWithBaseClasses>
                 </configuration>
             </plugin>
             <plugin>
@@ -105,5 +115,20 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <distributionManagement>
+                <repository>
+                    <id>local-maven-repo</id>
+                    <url>file://${maven.multiModuleProjectDirectory}/.m2/repository</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+    </profiles>
 
 </project>
