@@ -33,12 +33,9 @@ before_install:
 jobs:
   include:
   - stage: test
-    name: maven-rest-mvc-functional-consumer
+    name: maven spring-mvc functional rest api
     before_script: cd $TRAVIS_BUILD_DIR && ./mvnw -f maven-rest-mvc-functional-producer clean deploy
     script: cd $TRAVIS_BUILD_DIR && ./mvnw -f maven-rest-mvc-functional-consumer
-  - stage: test
-    name: maven-rest-mvc-functional-producer
-    script: cd $TRAVIS_BUILD_DIR && ./mvnw -f maven-rest-mvc-functional-producer
 #  - stage: deploy
 #    name: GitHub Pages
 #    script: skip
