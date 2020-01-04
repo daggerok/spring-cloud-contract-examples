@@ -64,18 +64,18 @@ class ApiConfig {
                       .andRoute(path("/**"), this::fallback);
     }
 
-    private ServerResponse fallback(ServerRequest request) {
+    ServerResponse fallback(ServerRequest request) {
         var uri = request.uri();
         Function<String, String> url = path -> String.format("%s://%s%s", uri.getScheme(), uri.getAuthority(), path);
         return ok().body(Map.of("get statistics", url.apply("/statistics"),
                                 "order beer", url.apply("/beer")));
     }
 
-    private ServerResponse getStatistics(ServerRequest request) {
+    ServerResponse getStatistics(ServerRequest request) {
         return ok().body(statistics);
     }
 
-    private ServerResponse postBeerOrder(ServerRequest request) throws ServletException, IOException {
+    ServerResponse postBeerOrder(ServerRequest request) throws ServletException, IOException {
         var body = request.body(BeerRequest.class);
         var isInvalid = body.getAge() < 21;
         var key = isInvalid ? Result.REJECTED : Result.ACCEPTED;
