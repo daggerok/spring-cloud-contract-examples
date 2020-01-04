@@ -34,8 +34,10 @@ jobs:
   include:
   - stage: test
     name: maven spring-mvc functional rest api
-    before_script: cd $TRAVIS_BUILD_DIR && ./mvnw -f maven-rest-mvc-functional-producer clean deploy
-    script: cd $TRAVIS_BUILD_DIR && ./mvnw -f maven-rest-mvc-functional-consumer
+    before_script: rm -rf .m2 ~/.m2/repository/com/github/daggerok/maven-rest-mvc-functional-*
+    script:
+      - cd $TRAVIS_BUILD_DIR && ./mvnw -f maven-rest-mvc-functional-producer clean deploy
+      - cd $TRAVIS_BUILD_DIR && ./mvnw -f maven-rest-mvc-functional-consumer
 #  - stage: deploy
 #    name: GitHub Pages
 #    script: skip
