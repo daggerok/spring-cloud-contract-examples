@@ -11,11 +11,11 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <name>${project.artifactId}</name>
     <groupId>com.github.daggerok</groupId>
-    <artifactId>maven-rest-mvc-functional-producer</artifactId>
+    <artifactId>maven-rest-mvc-functional-consumer</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <description>Producer app</description>
+    <name>maven-rest-mvc-consumer</name>
+    <description>Demo project for Spring Boot</description>
 
     <properties>
         <encoding>UTF-8</encoding>
@@ -29,14 +29,23 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
+            <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -61,9 +70,17 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-contract-verifier</artifactId>
+            <groupId>com.github.daggerok</groupId>
+            <artifactId>maven-rest-mvc-functional-producer</artifactId>
+            <classifier>stubs</classifier>
+            <version>0.0.1-SNAPSHOT</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
@@ -90,17 +107,6 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-contract-maven-plugin</artifactId>
-                <version>${spring-cloud-contract-maven-plugin.version}</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <testFramework>JUNIT5</testFramework>
-                    <!--<baseClassForTests>com.github.daggerok.mavenrestmvcproducer.RestBase</baseClassForTests>-->
-                    <packageWithBaseClasses>com.github.daggerok.mavenrestmvcproducer</packageWithBaseClasses>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
@@ -113,13 +119,23 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-            <distributionManagement>
+            <repositories>
                 <repository>
                     <id>.m2</id>
                     <name>.m2</name>
                     <url>file://${maven.multiModuleProjectDirectory}/.m2/repository</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                        <updatePolicy>never</updatePolicy>
+                        <checksumPolicy>ignore</checksumPolicy>
+                    </snapshots>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>never</updatePolicy>
+                        <checksumPolicy>ignore</checksumPolicy>
+                    </releases>
                 </repository>
-            </distributionManagement>
+            </repositories>
         </profile>
     </profiles>
 

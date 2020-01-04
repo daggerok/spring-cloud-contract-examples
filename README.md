@@ -5,17 +5,25 @@ Develop lighten stably tested microservices infrastructure.
 
 ### mvn
 
-* [producer-maven-mvc](producer-maven-mvc)
+first, implement [maven-rest-mvc-functional-producer](maven-rest-mvc-functional-producer) according to agreed contracts
 
 ```bash
 jdk11 # point JAVA_HOME to JDK 11
-./mvnw -f maven-rest-mvc-functional-producer
+./mvnw -f maven-rest-mvc-functional-producer clean deploy
 ```
 
-* [consumer-maven-mvc](consumer-maven-mvc)
+next implement [maven-rest-mvc-functional-consumer](maven-rest-mvc-functional-consumer) by using `maven-rest-mvc-functional-producer-stubs` artifact...
+
+```bash
+jdk11 # point JAVA_HOME to JDK 11
+./mvnw -f maven-rest-mvc-functional-consumer
+```
 
 ## resources
 
+* https://cloud.spring.io/spring-cloud-contract/reference/html/project-features.html#contract-dsl-multiple
+* https://cloud.spring.io/spring-cloud-contract/1.2.x/multi/multi__spring_cloud_contract_stub_runner.html#_classpath_scanning
+* https://github.com/spring-guides/gs-contract-rest/tree/master/complete/
 * https://support.smartbear.com/alertsite/docs/monitors/api/endpoint/jsonpath.html
 * https://cloud.spring.io/spring-cloud-contract/2.0.x/multi/multi__contract_dsl.html#contract-dsl-http-top-level-elements
 * [GitHub: Spring Cloud Contract Samples](https://github.com/spring-cloud-samples/spring-cloud-contract-samples)

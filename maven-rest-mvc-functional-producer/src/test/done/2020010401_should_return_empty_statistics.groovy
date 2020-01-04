@@ -4,7 +4,7 @@ package contracts.rest // will point to com.github...RestBase.class, but
 import org.springframework.cloud.contract.spec.Contract
 
 Contract.make {
-    priority 2020010401
+    priority 1
     description '2020010401 - should return empty statistics'
     request {
         url '/statistics'
@@ -17,7 +17,7 @@ Contract.make {
         }
         body([
                 "ACCEPTED": 0,
-                "REJECTED": value(anyNumber()),
+                "REJECTED": 0,
         ])
     }
 }

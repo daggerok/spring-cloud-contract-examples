@@ -3,20 +3,20 @@ package contracts.rest
 import org.springframework.cloud.contract.spec.Contract
 
 Contract.make {
-    priority 2020010403
-    description '2020010403 - should return accepted statistics'
+    priority 1
+    description '2020010406 - should return accepted and rejected statistics'
     request {
         url '/statistics'
         method GET()
     }
     response {
-        status 200
+        status(OK())
         headers {
             contentType(applicationJson())
         }
         body([
-                "ACCEPTED": 1,
-                "REJECTED": anyNumber(),
+                'ACCEPTED': 1,
+                'REJECTED': 2,
         ])
     }
 }

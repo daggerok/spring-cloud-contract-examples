@@ -9,8 +9,8 @@ Content-Type: application/json
 > {%
 
 client.test("should accept beer", function() {
+  client.assert(response.status === 202, 'Expected status is: 202');
   client.assert(!!response.body["REJECTED"], 'Expected result is: REJECTED');
-  client.assert(response.status === 400, 'Expected status is: 400');
 });
 
 %}
@@ -27,8 +27,8 @@ Content-Type: application/json
 > {%
 
 client.test("should accept beer", function() {
-  client.assert(!!response.body["ACCEPTED"], 'Expected result is: ACCEPTED');
   client.assert(response.status === 202, 'Expected status is: 202');
+  client.assert(!!response.body["ACCEPTED"], 'Expected result is: ACCEPTED');
 });
 
 %}

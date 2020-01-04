@@ -4,7 +4,7 @@ import org.springframework.cloud.contract.spec.Contract
 import org.springframework.cloud.contract.spec.internal.MatchingTypeValue
 
 Contract.make {
-    priority 2020010405
+    priority 1
     description '2020010405 - should reject another beer request if customer age is less then 21'
     request {
         url('/beer')
@@ -14,15 +14,15 @@ Contract.make {
         }
         body([
                 name: anyNonBlankString(),
-                age: 17,
+                age: regex('(([01]?[0-9])|(20))').asInteger(),
         ])
         bodyMatchers {
-            jsonPath('$.name', byRegex(onlyAlphaUnicode()))
-            jsonPath('$.age', byRegex('![2-9][1-9][0-9]?'))
+            jsonPath('$.name', byRegex(nonBlank()))
+            jsonPath('$.age', byRegex('(([01]?[0-9])|(20))').asInteger())
         }
     }
     response {
-        status(BAD_REQUEST())
+        status(ACCEPTED())
         headers {
             contentType applicationJson()
         }

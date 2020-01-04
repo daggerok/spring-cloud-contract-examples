@@ -39,7 +39,7 @@ enum Result {
 }
 
 @Configuration
-class ApiConfig {
+class StatisticsConfig {
 
     @Bean
     Map<Result, BigInteger> statistics() {
@@ -48,11 +48,18 @@ class ApiConfig {
         statistics.putIfAbsent(Result.REJECTED, BigInteger.ZERO);
         return statistics;
     }
+}
+
+@Configuration
+@RequiredArgsConstructor
+class ApiConfig {
+
+    private final Map<Result, BigInteger> statistics;
 
     @Bean
-    RouterFunction<ServerResponse> routes(Map<Result, BigInteger> statistics) {
-        return route().GET("/statistics", this::getStatistics)
-                      .POST("/beer", this::orderBeer)
+    RouterFunction<ServerResponse> routes() {
+        return route().POST("/beer", this::postBeerOrder)
+                      .GET("/statistics", this::getStatistics)
                       .build()
                       .andRoute(path("/**"), this::fallback);
     }
@@ -64,17 +71,16 @@ class ApiConfig {
                                 "order beer", url.apply("/beer")));
     }
 
-    private ServerResponse getStatistics(ServerRequest request) throws ServletException, IOException {
-        return ok().body(statistics());
+    private ServerResponse getStatistics(ServerRequest request) {
+        return ok().body(statistics);
     }
 
-    private ServerResponse orderBeer(ServerRequest request) throws ServletException, IOException {
+    private ServerResponse postBeerOrder(ServerRequest request) throws ServletException, IOException {
         var body = request.body(BeerRequest.class);
         var isInvalid = body.getAge() < 21;
         var key = isInvalid ? Result.REJECTED : Result.ACCEPTED;
-        statistics().computeIfPresent(key, (k, v) -> v.add(BigInteger.ONE));
-        return isInvalid ? badRequest().body(Map.of(key, key.getMessage()))
-                : accepted().body(Map.of(key, key.getMessage()));
+        statistics.computeIfPresent(key, (k, v) -> v.add(BigInteger.ONE));
+        return accepted().body(Map.of(key, key.getMessage()));
     }
 }
 
