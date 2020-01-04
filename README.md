@@ -1,9 +1,9 @@
 # spring-cloud-contract-examples [![Build Status](https://travis-ci.org/daggerok/spring-cloud-contract-examples.svg?branch=master)](https://travis-ci.org/daggerok/spring-cloud-contract-examples)
-Develop lighten stably tested microservices infrastructure.
+How to develop lighter actually stable testable microservices infrastructure.
 
 ## maven
 
-### mvn
+### functional spring-mvc rest api
 
 first, implement [maven-rest-mvc-functional-producer](maven-rest-mvc-functional-producer) according to agreed contracts
 
