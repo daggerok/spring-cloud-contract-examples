@@ -124,7 +124,8 @@
             </activation>
             <distributionManagement>
                 <repository>
-                    <id>local-maven-repo</id>
+                    <id>.m2</id>
+                    <name>.m2</name>
                     <url>file://${maven.multiModuleProjectDirectory}/.m2/repository</url>
                 </repository>
             </distributionManagement>

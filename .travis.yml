@@ -33,6 +33,10 @@ before_install:
 jobs:
   include:
   - stage: test
+    name: maven-rest-mvc-functional-consumer
+    before_script: cd $TRAVIS_BUILD_DIR && ./mvnw -f maven-rest-mvc-functional-producer clean deploy
+    script: echo TODO...
+  - stage: test
     name: maven-rest-mvc-functional-producer
     script: cd $TRAVIS_BUILD_DIR && ./mvnw -f maven-rest-mvc-functional-producer
 #  - stage: deploy
