@@ -64,7 +64,7 @@ class RestClient {
         return logAndTransform("getStatistics", exchange);
     }
 
-    public Map postBeerOrder(BeerRequest request) {
+    Map postBeerOrder(BeerRequest request) {
         var url = String.format("%s/beer", props.getUrl());
         var headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -73,7 +73,7 @@ class RestClient {
         return logAndTransform("orderBeer", exchange);
     }
 
-    private Map logAndTransform(String identifier, ResponseEntity<Map> exchange) {
+    Map logAndTransform(String identifier, ResponseEntity<Map> exchange) {
         log.info("{} result: {} / {}", identifier, exchange.getStatusCode(), exchange.getStatusCodeValue());
         return exchange.getBody();
     }
@@ -93,7 +93,7 @@ class ApiConfig {
                       .andRoute(path("/**"), this::fallback);
     }
 
-    private ServerResponse postBeerOrder(ServerRequest request) throws ServletException, IOException {
+    ServerResponse postBeerOrder(ServerRequest request) throws ServletException, IOException {
         var body = request.body(BeerRequest.class);
         var result = restClient.postBeerOrder(body);
         return result.containsKey("ACCEPTED")
@@ -101,11 +101,11 @@ class ApiConfig {
                 : badRequest().body(result);
     }
 
-    private ServerResponse getStatistics(ServerRequest request) throws ServletException, IOException {
+    ServerResponse getStatistics(ServerRequest request) throws ServletException, IOException {
         return ok().body(restClient.getStatistics());
     }
 
-    private ServerResponse fallback(ServerRequest request) {
+    ServerResponse fallback(ServerRequest request) {
         var uri = request.uri();
         Function<String, String> url = path -> String.format("%s://%s%s", uri.getScheme(), uri.getAuthority(), path);
         return ok().body(Map.of("get statistics", url.apply("/statistics"),
